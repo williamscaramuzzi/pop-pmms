@@ -17,12 +17,14 @@ class _FavoritosPageState extends State<FavoritosPage> {
   final ScrollController _scrollController = new ScrollController();
   List<Pop> _lista = [];
   void atualizaEstado(List<Pop> param){
+    debugPrint("executou 1 vez atualizaEStado");
     setState(() {
       _lista = param;
     });
   }
   @override
   Widget build(BuildContext context) {
+    debugPrint("buildou favoritosPageState");
     atualizaEstado(Provider.of<MeuEstado>(context, listen: false).listaoPops.where((element) => element.favoritado).toList());
     return Scaffold(
       appBar: AppBar(
@@ -48,6 +50,10 @@ class _FavoritosPageState extends State<FavoritosPage> {
                   color: Colors.black38,
                   onPressed: () async {
                     print("Pressionou o delete");
+                    var popPressionado = _lista[index];
+                    int indiceGeral = Provider.of<MeuEstado>(context, listen: false).listaoPops.indexOf(popPressionado);
+                    Provider.of<MeuEstado>(context, listen: false).toggleFavoritado(indiceGeral);
+                    setState(() {});
                   },
                 ),
                 leading: Text(_lista[index].id),
