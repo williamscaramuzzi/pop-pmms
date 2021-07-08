@@ -1,31 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:popv3/meu_drawer.dart';
+import 'package:popv3/pop.dart';
+import 'package:provider/provider.dart';
 
-class FavoritosPage extends StatelessWidget {
+import 'custom_pdf_viewer_widget.dart';
+import 'meu_estado.dart';
+
+class FavoritosPage extends StatefulWidget {
+  final title = "Favoritos";
   const FavoritosPage({Key? key}) : super(key: key);
+  @override
+  _FavoritosPageState createState() => _FavoritosPageState();
+}
 
+class _FavoritosPageState extends State<FavoritosPage> {
+  final ScrollController _scrollController = new ScrollController();
+  List<Pop> _lista = [];
+  void atualizaEstado(List<Pop> param){
+    setState(() {
+      _lista = param;
+    });
+  }
   @override
   Widget build(BuildContext context) {
+    atualizaEstado(Provider.of<MeuEstado>(context, listen: false).listaoPops.where((element) => element.favoritado).toList());
     return Scaffold(
-      appBar: new AppBar(title: Text("Favoritos (em construç)"),),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Center(
-              child: Text("A página de POP's favoritados pelo usuário ainda está em construção.",
-                style: TextStyle(fontSize: 40),
-                textAlign: TextAlign.center,
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(widget.title),
+      ),
+      body: Scrollbar(
+        controller: _scrollController,
+        thickness: 15,
+        isAlwaysShown: true,
+        radius: Radius.elliptical(5, 15),
+        child: ListView.builder(
+          controller: _scrollController,
+          itemCount: _lista.length,
+          itemBuilder: (context, index) {
+            return Card(
+              shadowColor: Colors.black,
+              elevation: 3,
+              color: Colors.white70,
+              child: ListTile(
+                trailing: IconButton(
+                  icon: Icon(Icons.delete_forever),
+                  color: Colors.black38,
+                  onPressed: () async {
+                    print("Pressionou o delete");
+                  },
+                ),
+                leading: Text(_lista[index].id),
+                title: Text(_lista[index].processo),
+                //alguns pops não tem o nome do procedimento porque são únicos, o nome do procedimento é o mesmo nome do processo, pra esses eu verifico se existe, se não existir, preenche o subtitulo com string vazia:
+                subtitle: Text(_lista[index].procedimento ?? ""),
+                onTap: () async {
+                  final path =
+                      'assets/docs/${_lista[index].getFileName()}';
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                        builder: (context) => CustomPdfViewer(path)),
+                  );
+                },
               ),
-            ),
-            Divider(height: 50,),
-            Center(
-              child: Icon(Icons.construction_outlined,
-                size: 80,
-                color: Colors.black,),
-            )
-          ],
+            );
+          },
         ),
       ),
-      );
+    );
   }
 }
+

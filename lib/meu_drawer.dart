@@ -36,12 +36,6 @@ class MeuDrawer extends StatelessWidget {
              )
            
          ),
-         ListTile(title: Text("Dúvidas frequentes"), onTap: (){
-           Navigator.of(context).pop();
-           Navigator.of(context).push(new MaterialPageRoute(
-               builder: (BuildContext context) => new DuvidasPage())
-           );
-         }),
          Divider(color: Colors.indigo[900],),
          ListTile(title: Text("Favoritos"), onTap: (){
            Navigator.of(context).pop();

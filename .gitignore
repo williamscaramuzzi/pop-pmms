@@ -26,10 +26,11 @@
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
+.package
 .pub-cache/
 .pub/
 /build/
+/assets/
 
 # Web related
 lib/generated_plugin_registrant.dart
