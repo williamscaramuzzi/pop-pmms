@@ -14,6 +14,7 @@ class Search extends SearchDelegate {
   ThemeData appBarTheme(BuildContext context) {
     final ThemeData theme = Theme.of(context);
     return theme.copyWith(
+      textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.white) ,
       appBarTheme: AppBarTheme(
         backgroundColor: Colors.indigo,
         iconTheme: theme.primaryIconTheme.copyWith(color: Colors.white),
@@ -22,7 +23,7 @@ class Search extends SearchDelegate {
         hintStyle: Theme.of(context)
             .textTheme
             .headline6!
-            .copyWith(color: Colors.white),
+            .copyWith(color: Colors.white10),
       ),
     );
   }
@@ -132,7 +133,9 @@ class Search extends SearchDelegate {
           horizontalTitleGap: 0.01,
           //leading: Text(suggestionList[index].id),
           title: Text(
-              "${suggestionList[index].processo} ${suggestionList[index].procedimento ?? ""}"),
+            "${suggestionList[index].processo} ${suggestionList[index].procedimento ?? ""}",
+            style: TextStyle(color: Colors.black54),
+          ),
           //subtitle: Text(suggestionList[index].procedimento ?? ""),
           onTap: () async {
             FocusScope.of(context).unfocus();

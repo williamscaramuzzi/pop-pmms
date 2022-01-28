@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.aapmms.popv3">
    <application
-        android:label="popv3"
+        android:label="Busca POP-PMMS"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
